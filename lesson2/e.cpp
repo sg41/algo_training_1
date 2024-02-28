@@ -16,14 +16,19 @@ int main(void) {
     }
     m_sorted.insert(m[i]);
   }
-  int k = 0, k_min = n + 1;
+  int k_min = 0, best_dist = -1, best_index = -1;
   for (int i = 1; i < n - 1; i++) {
     if (m[i] % 10 == 5 && m[i + 1] < m[i] && i > imax) {
-      k = std::distance(m_sorted.upper_bound(m[i]), m_sorted.end()) + 1;
-      if (k < k_min) k_min = k;
+      if (m[i] > best_dist) {
+        best_dist = m[i];
+        best_index = i;
+        if (best_dist == max) break;
+      }
     }
   }
-  if (k_min == n + 1) k_min = 0;
+  if (best_index != -1)
+    k_min =
+        std::distance(m_sorted.upper_bound(m[best_index]), m_sorted.end()) + 1;
   std::cout << k_min << std::endl;
   return 0;
 }
